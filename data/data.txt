@@ -1,0 +1,8 @@
+ivanov ivan ivanovich
+    mat:80
+    progr:90
+    lit:76
+petrov petr petrovich
+    mat:100
+    rus:90
+    xim:61
