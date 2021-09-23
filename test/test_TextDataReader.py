@@ -14,7 +14,6 @@ class TestTextDataReader:
             "petrov petr petrovich\n" + \
             " rus:87\n" + " lit:78\n"
 
-        data = {"p": [{"l": 100}]}
         data = {
             "ivanov ivan ivanovich": [
                 ("mat", 91), ("xim", 100)
