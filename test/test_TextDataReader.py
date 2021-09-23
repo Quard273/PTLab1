@@ -8,7 +8,6 @@ class TestTextDataReader:
 
     @pytest.fixture()
     def file_and_data_content(self) -> Tuple[str, DataType]:
-#        text = ""
 
         text = "ivanov ivan ivanovich\n" + \
             " mat:91\n" + " xim:100\n" + \
