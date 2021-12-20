@@ -192,5 +192,6 @@ def main():
 if __name__ == "__main__":
     main()
     
-    # Pull request и graph:
+    
+# Pull request и graph:
 ![Скриншот 20-12-2021 131504](https://user-images.githubusercontent.com/91258441/146751654-9e487abf-5d2d-4d28-8343-306128ba337b.jpg)
