@@ -195,3 +195,6 @@ if __name__ == "__main__":
     
 # Pull request и graph:
 ![Скриншот 20-12-2021 131504](https://user-images.githubusercontent.com/91258441/146751654-9e487abf-5d2d-4d28-8343-306128ba337b.jpg)
+
+# Диаграмма классов:
+<img width="927" alt="UML" src="https://user-images.githubusercontent.com/91258441/146778901-41347d44-09a6-4b37-8d9c-a33c2e94680b.png">
