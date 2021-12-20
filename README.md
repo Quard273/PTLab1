@@ -75,3 +75,121 @@ class TestYAMLDataReader:
                   Tuple[str, DataType]) -> None:
         file_content = YAMLDataReader().read(filepath_and_data[0])
         assert file_content == filepath_and_data[1]
+
+3) Сделаем файл для обработки входных данных:
+
+from typing import Dict
+from Types import DataType
+
+RatingType = Dict[str, float]
+
+
+class CheckAll90Ratings():
+
+    def __init__(self, data: DataType) -> None:
+        self.data: DataType = data
+        self.rating: RatingType = {}
+
+    def calc(self) -> RatingType:
+        for key in self.data:
+            ratingCount = 0
+            for subject in self.data[key]:
+                if subject[1] >= 90:
+                    ratingCount = ratingCount + 1
+            if ratingCount == len(self.data[key]):
+                self.rating[key] = 90
+        return self.rating
+
+4) Напишем для него тест:
+
+from typing import Dict, Tuple
+from Types import DataType
+from CheckAll90Ratings import CheckAll90Ratings
+import pytest
+
+RatingsType = Dict[str, float]
+
+
+class TestCheckAll90Ratings():
+
+    @pytest.fixture()
+    def input_data(self) -> Tuple[DataType, RatingsType]:
+        data: DataType = {
+            "Петров Петр Андреевич":
+            [
+                ("математика", 95),
+                ("русский язык", 99),
+                ("программирование", 90)
+            ],
+            "Игорев Игорь Игоревич":
+            [
+                ("математика", 65),
+                ("русский язык", 80),
+                ("программирование", 75),
+                ("литература", 95)
+            ],
+            "Иванов Иван Иванович":
+            [
+                ("математика", 90),
+                ("русский язык", 90),
+                ("программирование", 90),
+                ("литература", 90)
+            ]
+        }
+        rating_scores: RatingsType = {
+            "Абрамов Петр Сергеевич": 90,
+            "Иванов Иван Иванович": 90
+        }
+        return data, rating_scores
+
+    def test_init_calc_rating(self, input_data:
+                              Tuple[DataType,
+                                    RatingsType]) -> None:
+        calc_rating = CheckAll90Ratings(input_data[0])
+        assert input_data[0] == calc_rating.data
+
+    def test_calc(self, input_data:
+                  Tuple[DataType, RatingsType]) -> None:
+        rating = CheckAll90Ratings(input_data[0]).calc()
+
+        for student in rating.keys():
+            rating_score = rating[student]
+
+            assert pytest.approx(rating_score,
+                                 abs=0.001) == input_data[1][student]
+
+        for student in input_data[1]:
+            rating_score = input_data[1][student]
+
+            assert pytest.approx(rating_score,
+                                 abs=0.001) == rating[student]
+
+5) Отредактируем main для правильной работы:
+
+from YAMLDataReader import YAMLDataReader
+from CalcRating import CalcRating
+import argparse
+import sys
+
+
+def get_path_from_arguments(args) -> str:
+    parser = argparse.ArgumentParser(description="Path to datafile")
+    parser.add_argument("-p", dest="path", type=str, required=True,
+                        help="Path to datafile")
+    args = parser.parse_args(args)
+    return args.path
+
+
+def main():
+    path = get_path_from_arguments(sys.argv[1:])
+    reader = YAMLDataReader()
+    students = reader.read(path)
+    print("Students: ", students)
+    rating = CalcRating(students).calc()
+    print("Ratings: ", rating)
+
+
+if __name__ == "__main__":
+    main()
+    
+  
